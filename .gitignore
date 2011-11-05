@@ -1,0 +1,12 @@
+# File types #
+##############
+*.pyc
+*.tmproj
+
+# OS generated files #
+######################
+.DS_Store
+Icon?
+Thumbs.db
+
+

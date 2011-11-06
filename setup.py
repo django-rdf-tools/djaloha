@@ -19,15 +19,16 @@ setup(
     version = VERSION,
     description='Django integration for aloha HTML5 editor',
     packages=['djaloha','djaloha.templatetags'],
-    package_data = { "djaloha": [   'local/fr/LC_MESSAGES/django.mo',
-                                    'local/fr/LC_MESSAGES/django.mo',
-                                    'static/aloha/'],
-                    },
     include_package_data=True,
     author='Luc Jean',
     author_email='ljean@apidev.fr',
     license='BSD',
     #long_description=read('README.txt'),
-    download_url='git://github.com/quinode/djaloha.git',
+    #download_url = "https://github.com/quinode/djaloha/tarball/%s" % (VERSION),
+    #download_url='git://github.com/quinode/djaloha.git',
+    zip_safe=False,
+    install_requires = [
+        'django-floppyforms==0.4.7',
+    ]
 )
 

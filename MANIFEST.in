@@ -1,3 +1,1 @@
-exclude .gitignore
-recursive-exclude .git *
-recursive-include * *
+recursive-include djaloha *

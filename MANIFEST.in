@@ -1,1 +1,3 @@
-recursive-include djaloha *
+recursive-include djaloha/locale *.po *.mo
+recursive-include djaloha/static *
+recursive-include djaloha/templates *.html

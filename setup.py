@@ -27,8 +27,6 @@ setup(
     #download_url = "https://github.com/quinode/djaloha/tarball/%s" % (VERSION),
     #download_url='git://github.com/quinode/djaloha.git',
     zip_safe=False,
-    install_requires = [
-        'django-floppyforms==0.4.7',
-    ]
+    install_requires = ['django-floppyforms==0.4.7',]
 )
 

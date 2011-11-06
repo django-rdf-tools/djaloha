@@ -1,0 +1,3 @@
+exclude .gitignore
+recursive-exclude .git *
+recursive-include * *

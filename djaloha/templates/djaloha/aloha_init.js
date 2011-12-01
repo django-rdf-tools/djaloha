@@ -99,7 +99,7 @@ $(function(){
                 //force the focus in order to make sure that the editable is activated
                 //this will cause the deactivated event to be triggered, and the content to be saved
                 the_obj.focus(); 
-            }, 0);
+            }, 1);
         });
     });
 });

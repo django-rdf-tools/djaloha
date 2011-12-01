@@ -1,9 +1,6 @@
-.highlight {
-	border: solid thin #af7;
-}
-
 .djaloha-editable {
 	min-height: 20px;
+	/*outline: 5px solid #af7 !important;*/
 }
 
 ul.form-errors {

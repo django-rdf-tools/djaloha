@@ -3,6 +3,7 @@
 from django import template
 register = template.Library()
 from django.db.models import get_model
+from djaloha.forms import DjaloahForm
 
 @register.filter
 def convert_crlf(value):
@@ -29,10 +30,20 @@ class DjalohaEditNode(template.Node):
         self._field_name = field_name
     
     def render(self, context):
+        #resolve context. keep string values as is
+        for (k, v) in self._lookup.items():
+            new_v = v.strip('"').strip("'")
+            if len(v)-2 == len(new_v):
+                self._lookup[k] = new_v
+            else:
+                self._lookup[k] = context[v]
+        
+        #get or create the object to edit
         self._object, _is_new = self._model_class.objects.get_or_create(**self._lookup)
         value = getattr(self._object, self._field_name)
+        
+        #if edit mode : activate aloha form
         if context.get('djaloah_edit'):
-            from djaloha.forms import DjaloahForm
             form = DjaloahForm(self._model_class, self._lookup, self._field_name, field_value=value)
             return form.as_is()
         else:

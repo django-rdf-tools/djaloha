@@ -78,28 +78,30 @@ $(function(){
         }
     );
     
+    var resize_thumbnail = function () {
+        $(".djaloha-editable img.djaloha-thumbnail").each(function(index) {
+            $(this).removeClass("djaloha-thumbnail")
+            $(this).attr("src", $(this).attr("rel"));
+            $(this).removeAttr('rel');
+        });
+
+        $(".djaloha-editable a.djaloha-document").each(function(index) {
+            $(this).removeClass("djaloha-document")
+            var img = $(this).find("img")
+            $(this).attr('href', img.attr("rel"));
+            $(this).attr('target', '_blank');
+            $(this).removeAttr('rel')
+        });
+
+        //force the focus in order to make sure that the editable is activated
+        //this will cause the deactivated event to be triggered, and the content to be saved
+        the_obj.focus(); 
+    }
+    
     GENTICS.Aloha.EventRegistry.subscribe(GENTICS.Aloha, 'editableCreated', function(event, editable) {
         var the_obj = editable.obj;
         jQuery(editable.obj).bind('drop', function(event){
-            setTimeout(function () {
-                $(".djaloha-editable img.djaloha-thumbnail").each(function(index) {
-                    $(this).removeClass("djaloha-thumbnail")
-                    $(this).attr("src", $(this).attr("rel"));
-                    $(this).removeAttr('rel');
-                });
-
-                $(".djaloha-editable a.djaloha-document").each(function(index) {
-                    $(this).removeClass("djaloha-document")
-                    var img = $(this).find("img")
-                    $(this).attr('href', img.attr("rel"));
-                    $(this).attr('target', '_blank');
-                    $(this).removeAttr('rel')
-                });
-
-                //force the focus in order to make sure that the editable is activated
-                //this will cause the deactivated event to be triggered, and the content to be saved
-                the_obj.focus(); 
-            }, 1);
+            setTimeout(resize_thumbnail, 0);
         });
     });
 });

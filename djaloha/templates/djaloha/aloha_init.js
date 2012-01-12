@@ -1,10 +1,11 @@
 {% load i18n djaloha_utils %}
+
 $(function(){
     // Aloha configuration
     GENTICS.Aloha.settings = {
         logLevels: {'error': true, 'warn': true, 'info': true, 'debug': false},
         errorhandling : true,
-        ribbon: false,	
+        ribbon: false,
         "i18n": {
             "current": "{%if LANGUAGE_CODE|length > 2%}{{LANGUAGE_CODE|slice:':2'}}{%else%}{{LANGAGE_CODE}}{%endif%}"
         },
@@ -98,10 +99,26 @@ $(function(){
         the_obj.focus(); 
     }
     
+    //resize image when dropped in the editor
     GENTICS.Aloha.EventRegistry.subscribe(GENTICS.Aloha, 'editableCreated', function(event, editable) {
         var the_obj = editable.obj;
         jQuery(editable.obj).bind('drop', function(event){
             setTimeout(resize_thumbnail, 0);
         });
     });
+    
+    //Update the link text when selected from the link list
+    GENTICS.Aloha.EventRegistry.subscribe(GENTICS.Aloha, 'hrefChanged', function(event, link) {
+        if (link.item && !link.href){
+            this.Link.hrefField.setItem(null);//workaround
+        }
+        if (link.item) {
+            $(link.obj).html(link.item.name);
+            $(link.obj).attr('title', link.item.name);
+        } else if (link.href) {
+            $(link.obj).html(link.href);
+        }
+        return false;
+    });
+    
 });

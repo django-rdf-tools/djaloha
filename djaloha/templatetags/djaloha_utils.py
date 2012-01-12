@@ -70,7 +70,7 @@ def get_djaloha_edit_args(parser, token):
         raise template.TemplateSyntaxError(u"The djaloha_edit templatetag requires at least one lookup")
     return model_class, lookup, field_name
 
-@register.tag
-def djaloha_edit(parser, token):
-    model_class, lookup, field_name = get_djaloha_edit_args(parser, token)
-    return DjalohaEditNode(model_class, lookup, field_name)
+#@register.tag
+#def djaloha_edit(parser, token):
+#    model_class, lookup, field_name = get_djaloha_edit_args(parser, token)
+#    return DjalohaEditNode(model_class, lookup, field_name)

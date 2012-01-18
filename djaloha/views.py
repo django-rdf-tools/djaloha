@@ -15,7 +15,8 @@ def aloha_init(request):
     for full_model_name in link_models:
         app_name, model_name = full_model_name.split('.')
         model = get_model(app_name, model_name)
-        links.extend(model.objects.all())
+        if model:
+            links.extend(model.objects.all())
     
     return render_to_response(
         'djaloha/aloha_init.js',

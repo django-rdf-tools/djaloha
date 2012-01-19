@@ -1,4 +1,4 @@
-djaloha
+Djaloha
 ===============================================
 
 * `What is djaloha good for?`_
@@ -28,9 +28,9 @@ Djaloha has a "provider" that allows you to add local links to your models (arti
 * search this kind of models using another method
 * search this kind of models using a specified model field
 
-You can set the ``DJALOHA_LINK_MODELS`` setting in your settings.py to tell which django models will be available in the auto-complete field of the "add link" widget like this :
+You can set the ``DJALOHA_LINK_MODELS`` setting in your settings.py to tell which django models will be available in the auto-complete field of the "add link" widget like this ::
 
-DJALOHA_LINK_MODELS = ('coop_local.Article','calendar.Event')
+    DJALOHA_LINK_MODELS = ('coop_local.Article','calendar.Event')
 
 (to be continued)
 

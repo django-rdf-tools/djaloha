@@ -38,7 +38,7 @@ class AlohaInput(TextInput):
             "aloha/plugins/com.gentics.aloha.plugins.Paste/plugin.js",
             "aloha/plugins/com.gentics.aloha.plugins.Paste/wordpastehandler.js",
             "aloha/plugins/at.tapo.aloha.plugins.Image/plugin.js",
-            "aloha/plugins/fr.apidev.aloha.plugins.TextColor/plugin.js",
+            "aloha/plugins/TextColor/plugin.js",
             reverse('aloha_init'),
         )
         

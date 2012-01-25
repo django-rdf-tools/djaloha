@@ -1,3 +1,6 @@
+//This plugin has been slighlty adapted from 
+//https://github.com/RecessMobile/Aloha-Plugin-TextColor
+
 /**
  * Text Color Plugin
  */
@@ -6,7 +9,7 @@ GENTICS.Aloha.TextColor = new GENTICS.Aloha.Plugin('TextColor');
 /**
  * Configure the available languages
  */
-GENTICS.Aloha.TextColor.languages = ['en', 'ru'];
+GENTICS.Aloha.TextColor.languages = ['en', 'fr'];
 
 /**
  * Configure the available colors
@@ -70,7 +73,7 @@ GENTICS.Aloha.TextColor.init = function () {
     GENTICS.Aloha.FloatingMenu.addButton(
       "GENTICS.Aloha.continuoustext", 
       buttons[value], 
-      'Colour',//that.i18n("floatingmenu.tab.color"), 
+      that.i18n("floatingmenu.tab.color"), 
       1
     );    
   });

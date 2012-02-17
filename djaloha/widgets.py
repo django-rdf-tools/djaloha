@@ -13,6 +13,10 @@ class AlohaInput(TextInput):
     
     template_name='djaloha/alohainput.html'
     
+    def __init__(self, *args, **kwargs):
+        self._text_color_plugin = kwargs.pop('text_color_plugin', True)
+        super(AlohaInput, self).__init__(*args, **kwargs)
+    
     def _get_media(self):
         """
         return code for inserting required js and css files
@@ -38,9 +42,12 @@ class AlohaInput(TextInput):
             "aloha/plugins/com.gentics.aloha.plugins.Paste/plugin.js",
             "aloha/plugins/com.gentics.aloha.plugins.Paste/wordpastehandler.js",
             "aloha/plugins/at.tapo.aloha.plugins.Image/plugin.js",
-            "aloha/plugins/TextColor/plugin.js",
-            reverse('aloha_init'),
         )
+        
+        if self._text_color_plugin:
+            js = js + ("aloha/plugins/TextColor/plugin.js",)
+
+        js = js + (reverse('aloha_init'), )
         
         return Media(css=css, js=js)
     

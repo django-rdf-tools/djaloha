@@ -106,19 +106,4 @@ $(function(){
             setTimeout(resize_thumbnail, 0);
         });
     });
-    
-    //Update the link text when selected from the link list
-    GENTICS.Aloha.EventRegistry.subscribe(GENTICS.Aloha, 'hrefChanged', function(event, link) {
-        if (link.item && !link.href){
-            this.Link.hrefField.setItem(null);//workaround
-        }
-        if (link.item) {
-            $(link.obj).html(link.item.name);
-            $(link.obj).attr('title', link.item.name);
-        } else if (link.href) {
-            $(link.obj).html(link.href);
-        }
-        return false;
-    });
-    
 });

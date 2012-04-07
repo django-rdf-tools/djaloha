@@ -96,7 +96,7 @@ $(function(){
             doc_title = copy.attr('title');
 
             img.wrap('<div class="docdl_wrapper" />');
-            img.attr('src',img.attr('rel')).removeClass('cms_doc_bloc');
+            img.attr('src', icon_url).removeClass('cms_doc_bloc');
             img.removeAttr('rel');
 
             var newdiv = copy.find("div.docdl_wrapper");

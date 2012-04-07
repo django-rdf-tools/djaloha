@@ -79,19 +79,34 @@ $(function(){
         }
     );
     
-    var resize_thumbnail = function () {
+    var resize_thumbnail = function (the_obj) {
+
         $(".djaloha-editable img.djaloha-thumbnail").each(function(index) {
-            $(this).removeClass("djaloha-thumbnail")
+            $(this).removeClass("djaloha-thumbnail");
             $(this).attr("src", $(this).attr("rel"));
             $(this).removeAttr('rel');
         });
 
         $(".djaloha-editable a.djaloha-document").each(function(index) {
-            $(this).removeClass("djaloha-document")
-            var img = $(this).find("img")
-            $(this).attr('href', img.attr("rel"));
-            $(this).attr('target', '_blank');
-            $(this).removeAttr('rel')
+
+            var copy = $(this).clone();
+            var img = copy.find("img");
+            icon_url = img.attr('rel');
+            doc_url = copy.attr('rel');
+            doc_title = copy.attr('title');
+
+            img.wrap('<div class="docdl_wrapper" />');
+            img.attr('src',img.attr('rel')).removeClass('cms_doc_bloc');
+            img.removeAttr('rel');
+
+            var newdiv = copy.find("div.docdl_wrapper");
+            newdiv.append('<a target="_blank" class="docdl_link" href="'+doc_url+'">'+doc_title+'</a>');
+
+            copy.find("span.cms_doc_title").remove();
+            newdiv.unwrap();
+            newdiv.insertAfter($(this));
+            $(this).remove();
+
         });
 
         //force the focus in order to make sure that the editable is activated
@@ -103,7 +118,9 @@ $(function(){
     GENTICS.Aloha.EventRegistry.subscribe(GENTICS.Aloha, 'editableCreated', function(event, editable) {
         var the_obj = editable.obj;
         jQuery(editable.obj).bind('drop', function(event){
-            setTimeout(resize_thumbnail, 0);
+            setTimeout(function() {
+                    resize_thumbnail(the_obj);
+            }, 0);
         });
     });
     

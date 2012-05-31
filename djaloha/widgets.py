@@ -32,7 +32,11 @@ class AlohaInput(TextInput):
         }
         
         js = (
-            "aloha/aloha.js",
+            "js/_lib/jquery.cookie.js",
+            "aloha/sizzle.js",
+            "aloha/ext-jquery-adapter.js",
+            "aloha/ext-all.js",
+            "aloha/aloha-nodeps.js",
             "aloha/plugins/com.gentics.aloha.plugins.Format/plugin.js",
             "aloha/plugins/com.gentics.aloha.plugins.List/plugin.js",
             "aloha/plugins/com.gentics.aloha.plugins.HighlightEditables/plugin.js",

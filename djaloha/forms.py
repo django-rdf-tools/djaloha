@@ -3,9 +3,9 @@ import floppyforms as forms
 from djaloha.widgets import AlohaInput
 from django.utils.encoding import smart_unicode
 
-class DjaloahForm(forms.Form):
+class DjalohaForm(forms.Form):
     def __init__(self, model_class, lookup, field_name, data=None, field_value=None, *args, **kwargs):
-        super(DjaloahForm, self).__init__(data, *args, **kwargs)
+        super(DjalohaForm, self).__init__(data, *args, **kwargs)
         
         self._model_class = model_class
         self._lookup = lookup

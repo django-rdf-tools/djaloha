@@ -26,28 +26,17 @@ class AlohaInput(TextInput):
         
         css = {
             'all': (
-                "aloha/plugins/at.tapo.aloha.plugins.Image/resources/imageplugin.css",
-                "css/djaloha.css",
+                "aloha.0.20/css/aloha.css",
             )
         }
         
         js = (
-            "aloha/aloha.js",
-            "aloha/plugins/com.gentics.aloha.plugins.Format/plugin.js",
-            "aloha/plugins/com.gentics.aloha.plugins.List/plugin.js",
-            "aloha/plugins/com.gentics.aloha.plugins.HighlightEditables/plugin.js",
-            "aloha/plugins/com.gentics.aloha.plugins.Table/plugin.js",
-            "aloha/plugins/com.gentics.aloha.plugins.Link/plugin.js",
-            "aloha/plugins/com.gentics.aloha.plugins.Link/LinkList.js",
-            "aloha/plugins/com.gentics.aloha.plugins.Paste/plugin.js",
-            "aloha/plugins/com.gentics.aloha.plugins.Paste/wordpastehandler.js",
-            "aloha/plugins/at.tapo.aloha.plugins.Image/plugin.js",
+            "js/jquery.1.7.2.js",
+            # Yes I know this is very dirty but the only solution so-far
+            'aloha.0.20/lib/aloha.js" data-aloha-plugins="common/format,common/highlighteditables,common/list,common/link,common/undo,common/paste,common/block',
         )
         
-        if self._text_color_plugin:
-            js = js + ("aloha/plugins/TextColor/plugin.js",)
-
-        js = js + (reverse('aloha_init'), )
+        js = js + (reverse('aloha_init'),)
         
         return Media(css=css, js=js)
     

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from djaloha.forms import DjaloahForm
+from djaloha.forms import DjalohaForm
 from django.db.models import get_model
 
 def extract_forms_args(data):
@@ -21,7 +21,7 @@ def extract_forms_args(data):
 def make_forms(forms_args, data):
     forms = []
     for (model_class, lookup, field_name) in forms_args:
-        forms.append(DjaloahForm(model_class, lookup, field_name, data=data))
+        forms.append(DjalohaForm(model_class, lookup, field_name, data=data))
     return forms
     
     

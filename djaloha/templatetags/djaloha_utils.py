@@ -3,7 +3,7 @@
 from django import template
 register = template.Library()
 from django.db.models import get_model
-from djaloha.forms import DjaloahForm
+from djaloha.forms import DjalohaForm
 
 @register.filter
 def convert_crlf(value):
@@ -43,8 +43,8 @@ class DjalohaEditNode(template.Node):
         value = getattr(self._object, self._field_name)
         
         #if edit mode : activate aloha form
-        if context.get('djaloah_edit'):
-            form = DjaloahForm(self._model_class, self._lookup, self._field_name, field_value=value)
+        if context.get('djaloha_edit'):
+            form = DjalohaForm(self._model_class, self._lookup, self._field_name, field_value=value)
             return form.as_is()
         else:
             return value

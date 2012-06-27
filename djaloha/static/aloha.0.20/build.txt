@@ -43,5 +43,5 @@ lib/aloha/ui-browser.js
 lib/aloha/repository.js
 lib/aloha/repositoryobjects.js
 lib/aloha-bootstrap.js
-build-date: Thu May 24 18:08:02 CEST 2012
+build-date: Fri Jun 15 10:27:50 CEST 2012
 build-target: 

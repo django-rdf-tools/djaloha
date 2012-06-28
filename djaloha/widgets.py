@@ -29,7 +29,7 @@ class AlohaInput(TextInput):
         """
 
         try:
-            custom_jquery = getattr(settings, 'DJALOHA_JQUERY', "js/jquery.1.7.1.min.js") # le fallback est celui de coop-cms ?
+            custom_jquery = getattr(settings, 'DJALOHA_JQUERY', "js/jquery-1.7.1.min.js") # le fallback est celui de coop-cms ?
             aloha_init_url = self.aloha_init_url or getattr(settings, 'DJALOHA_INIT_URL', None) or reverse('aloha_init')
 
             aloha_plugins = self.aloha_plugins

@@ -5,10 +5,11 @@
 *.egg-info
 /build
 /dist
+*/.hg
+.hg*
 
 # OS generated files #
 ######################
-.gitignore
 .DS_Store
 Icon?
 Thumbs.db

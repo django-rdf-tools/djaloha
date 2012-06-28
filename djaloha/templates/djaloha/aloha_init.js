@@ -9,23 +9,20 @@
 		ribbon: false,
 		locale: "{%if LANGUAGE_CODE|length > 2%}{{LANGUAGE_CODE|slice:':2'}}{%else%}{{LANGAGE_CODE}}{%endif%}",
 		floatingmenu: {
-			"horizontalOffset" : "5",
-			"behaviour" : "topalign",
-			"width" : "510",
-			"topalignOffset" : "110" 
+			"behaviour" : "float"
 		},
-		repositories: {
-			linklist: {
-            	data: [{% for link in links %}
-                    { name: "{{link.title|convert_crlf}}", url: '{{link.get_absolute_url}}', type: 'page', weight: 0.5 }{%if not forloop.last %},{%endif%}
+        repositories: {
+            linklist: {
+		    	data: [{% for link in links %}
+                    { name: "{{link.title|convert_crlf}}", url: '{{link.get_absolute_url}}', type: 'website', weight: 0.50 }{%if not forloop.last %},{%endif%}
                 {% endfor %}]
 			}
 		},
 		plugins: {
 			format: {
 				// all elements with no specific configuration get this configuration
-				config: [  'b', 'i', 'p', 'sub', 'sup', 'del', 'title', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'pre', 'removeFormat' ],
-				editables: {
+				config: [  'b', 'i', 'u', 'del', 'p', 'sub', 'sup', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'pre', 'code', 'removeFormat' ],
+                editables: {
 					// no formatting allowed for title
 					'#top-text': []
 				}
@@ -57,17 +54,17 @@
 					'#top-text': []
 				},
 				// all links that match the targetregex will get set the target
-			// e.g. ^(?!.*aloha-editor.com).* matches all href except aloha-editor.com
-				targetregex: '^(?!.*aloha-editor.com).*',
+                // e.g. ^(?!.*aloha-editor.com).* matches all href except aloha-editor.com
+				targetregex : '^http.*',
 				// this target is set when either targetregex matches or not set
 				// e.g. _blank opens all links in new window
 				target: '_blank',
 				// the same for css class as for target
-				cssclassregex: '^(?!.*aloha-editor.com).*',
-				cssclass: 'djaloha-editable',
+				//cssclassregex: '^(?!.*aloha-editor.com).*',
+				//cssclass: 'djaloha-editable',
 				// use all resources of type website for autosuggest
-				objectTypeFilter: ['website'],
-				// handle change of href
+				objectTypeFilter: ['page', 'website']
+				/* handle change of href
 				onHrefChange: function ( obj, href, item ) {
 					var jQuery = Aloha.require( 'aloha/jquery' );
 					if ( item ) {
@@ -75,7 +72,7 @@
 					} else {
 						jQuery( obj ).removeAttr( 'data-name' );
 					}
-				}
+				}*/
 			},
 			table: {
 				// all elements with no specific configuration are not allowed to insert tables
@@ -100,7 +97,7 @@
 					{ name: 'table-style-redwhite', iconClass: 'aloha-button-row-redwhite' }
 				]
 			},
-			image: {
+            image: {
 				config:{
 					'fixedAspectRatio' : false,
 					'maxWidth'         : 600,

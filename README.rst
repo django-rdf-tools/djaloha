@@ -26,8 +26,7 @@ In settings.py, add 'djaloha' to the INSTALLED_APPS
 Under Django 1.3+, the static folder should be found automatically, as the templates folder.
 In urls.py add ``(r'^djaloha/', include('djaloha.urls'))`` to your urlpatterns
 
-Then create a form. For example something like:
-
+Then create a form. For example something like ::
 
     import floppyforms
     from models import Note
@@ -61,12 +60,13 @@ You can set the ``DJALOHA_LINK_MODELS`` setting in your settings.py to tell whic
     DJALOHA_LINK_MODELS = ('coop_local.Article','calendar.Event')
     
     
-djaloha requires jquery and is provided by default with jquery.1.7.2. You can change the jquery version if needed
+djaloha requires jquery and is provided by default with jquery.1.7.2. You can change the jquery version if needed ::
 
     DJALOHA_JQUERY = 'js/jquery.1.7.2.js'
     
+    
 Aloha has a nice plugin architecture. djaloha includes by default the main Aloha plugins. You may want to have a different set of plugins.
-Please refer to the Aloha docs for more information on plugins
+Please refer to the Aloha docs for more information on plugins ::
 
     DJALOHA_PLUGINS = (
         "common/format",
@@ -85,6 +85,7 @@ Please refer to the Aloha docs for more information on plugins
         "common/table",
         "extra/browser",
     )
+    
 
 Please note that the ``DJALOHA_PLUGINS`` setting is a global setting. If you need to change the set of plugins for a specific form field, you
 can pass a similar tuple in the ``aloha_plugins`` attribute of your ``AlohaInput`` widget.

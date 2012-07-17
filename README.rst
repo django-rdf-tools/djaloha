@@ -28,12 +28,12 @@ In urls.py add ``(r'^djaloha/', include('djaloha.urls'))`` to your urlpatterns
 
 Then create a form. For example something like:
 
+
     import floppyforms
     from models import Note
     from djaloha.widgets import AlohaInput
     
     class NoteForm(floppyforms.ModelForm):
-    
         class Meta:
             model = Note
             fields = ('text',)
@@ -41,8 +41,9 @@ Then create a form. For example something like:
                 'text': AlohaInput(),
             }
 
-Let's assume that you've a `form` variable pointing on an instance of a NoteForm.
-In the template file, call the form and don't forget to put `{{form.media}}` in the headers.
+
+Let's assume that you've a ``form`` variable pointing on an instance of a NoteForm.
+In the template file, call the form and don't forget to put ``{{form.media}}`` in the headers.
 
 .. _options:
 

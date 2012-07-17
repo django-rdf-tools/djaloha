@@ -3,9 +3,11 @@ Djaloha
 
 * `What is djaloha good for?`_
 * `Quick start`_
+* `Options`_
 
 .. _What is djaloha good for?: #good-for
 .. _Quick start?: #quick-start
+.. _Options?: #options
 
 .. _good-for:
 
@@ -23,6 +25,29 @@ Quick start
 In settings.py, add 'djaloha' to the INSTALLED_APPS 
 Under Django 1.3+, the static folder should be found automatically, as the templates folder.
 In urls.py add ``(r'^djaloha/', include('djaloha.urls'))`` to your urlpatterns
+
+Then create a form. For example something like:
+
+    import floppyforms
+    from models import Note
+    from djaloha.widgets import AlohaInput
+    
+    class NoteForm(floppyforms.ModelForm):
+    
+        class Meta:
+            model = Note
+            fields = ('text',)
+            widgets = {
+                'text': AlohaInput(),
+            }
+
+Let's assume that you've a `form` variable pointing on an instance of a NoteForm.
+In the template file, call the form and don't forget to put `{{form.media}}` in the headers.
+
+.. _options:
+
+Options
+------------------------------------
 
 Djaloha has a "provider" that allows you to add local links to your models (articles, contacts, whatever) easily, through an autocomplete field that will search for objects based on rules you defined for each model :
 

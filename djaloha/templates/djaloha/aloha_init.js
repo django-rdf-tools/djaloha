@@ -124,39 +124,40 @@
 			cite: {
 				referenceContainer: '#references'
 			},
-			formatlesspaste :{
-				formatlessPasteOption : true,
-				strippedElements : [
-				"em",
-				"strong",
-				"small",
-				"s",
-				"cite",
-				"q",
-				"dfn",
-				"abbr",
-				"time",
-				"code",
-				"var",
-				"samp",
-				"kbd",
-				"sub",
-				"sup",
-				"i",
-				"b",
-				"u",
-				"mark",
-				"ruby",
-				"rt",
-				"rp",
-				"bdi",
-				"bdo",
-				"ins",
-				"del"]
-			}
-			,
-			'numerated-headers': {
-				numeratedactive: false
+			formatlesspaste: {
+				config: {
+					button: false, // if set to false the button will be hidden
+					formatlessPasteOption: true, // default state of the button
+					strippedElements: [ // elements to be stripped from the pasted code
+						"a",
+						"em",
+						"strong",
+						"small",
+						"s",
+						"cite",
+						"q",
+						"dfn",
+						"abbr",
+						"time",
+						"code",
+						"var",
+						"samp",
+						"kbd",
+						"sub",
+						"sup",
+						"i",
+						"b",
+						"u",
+						"mark",
+						"ruby",
+						"rt",
+						"rp",
+						"bdi",
+						"bdo",
+						"ins",
+						"del"
+					]
+				}
 			}
 		}
 	};
@@ -174,8 +175,8 @@
     });
     
     var resize_thumbnail = function (the_obj) {
-
-        $(".djaloha-editable img.djaloha-thumbnail").each(function(index) {
+	
+		$(".djaloha-editable img.djaloha-thumbnail").each(function(index) {
             $(this).removeClass("djaloha-thumbnail");
             $(this).attr("src", $(this).attr("rel"));
             $(this).removeAttr('rel');
@@ -215,7 +216,7 @@
         jQuery(editable.obj).bind('drop', function(event){
             setTimeout(function() {
                     resize_thumbnail(the_obj);
-            }, 0);
+            }, 100);
         });
     });
     

@@ -29,26 +29,27 @@ class AlohaInput(TextInput):
         """
 
         try:
-            custom_jquery = getattr(settings, 'DJALOHA_JQUERY', "js/jquery-1.7.1.min.js") # le fallback est celui de coop-cms ?
+            custom_jquery = getattr(settings, 'DJALOHA_JQUERY', "js/jquery-1.7.2.js")
             aloha_init_url = self.aloha_init_url or getattr(settings, 'DJALOHA_INIT_URL', None) or reverse('aloha_init')
+            aloha_version = getattr(settings, 'DJALOHA_ALOHA_VERSION', "aloha.0.20.20")
 
             aloha_plugins = self.aloha_plugins
             if not aloha_plugins:
                 aloha_plugins = getattr(settings, 'DJALOHA_PLUGINS', None)
             if not aloha_plugins:
                 aloha_plugins = (
-                    "djaloha/format",
+                    "common/format",
                     "common/highlighteditables",
                     "common/list",
-                    "djaloha/link",
+                    "common/link",
                     "common/undo",
-                    "common/paste",
+                    "extra/formatlesspaste",
                     "common/commands",
                     "common/image",
-                    "common/align",
-                    "extra/attributes",
+                    #"common/align",
+                    #"extra/attributes",
                     "common/characterpicker",
-                    "djaloha/abbr",
+                    "common/abbr",
                     "common/horizontalruler",
                     "common/table",
                 )
@@ -57,14 +58,14 @@ class AlohaInput(TextInput):
 
             css = {
                 'all': (
-                    "aloha.0.20/css/aloha.css",
+                    "{0}/css/aloha.css".format(aloha_version),
                 )
             }
 
             js = (
                 custom_jquery,
                 # Yes I know this is very dirty but the better (less bad) solution so-far
-                u'aloha.0.20/lib/aloha.js" data-aloha-plugins="{0}'.format(u",".join(aloha_plugins)),
+                u'{0}/lib/aloha.js" data-aloha-plugins="{1}'.format(aloha_version, u",".join(aloha_plugins)),
                 aloha_init_url,
             )
 

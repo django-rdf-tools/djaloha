@@ -129,7 +129,9 @@
 					button: false, // if set to false the button will be hidden
 					formatlessPasteOption: true, // default state of the button
 					strippedElements: [ // elements to be stripped from the pasted code
-						"a",
+						"span",
+                  		"font",
+                  		"style",
 						"em",
 						"strong",
 						"small",

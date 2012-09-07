@@ -300,6 +300,8 @@ function(Aloha, Plugin, FloatingMenu, i18n, i18nCore, jQuery) {
 			jQuery.each(Aloha.Selection.getRangeObject().getSelectionTree(), function () {
 				if(this.selection !== 'none' && this.domobj.nodeType !== 3) {
 					jQuery(this.domobj).css('text-align', that.alignment);
+				} else if (this.selection !== 'none' && this.domobj.nodeType === 3) {
+					jQuery(this.domobj).parents('p').first().css('text-align', that.alignment);
 				}
 			});
 

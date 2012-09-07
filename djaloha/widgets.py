@@ -46,7 +46,7 @@ class AlohaInput(TextInput):
                     "extra/formatlesspaste",
                     "common/commands",
                     "common/image",
-                    #"common/align",
+                    "common/align",
                     #"extra/attributes",
                     "common/characterpicker",
                     "common/abbr",

@@ -20,7 +20,7 @@ function(Aloha, jQuery, ContentHandlerManager) {
 		/**
 		 * Enable/Disable formatless pasting option 
 		 */
-		enabled: false,
+		enabled: true,
 
 		
 		/**

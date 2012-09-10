@@ -307,7 +307,14 @@ function(Aloha, Plugin, FloatingMenu, i18n, i18nCore, jQuery) {
 						var elt = jQuery(this.domobj).parents(tag).first();
 						if (elt.length) {
 							if (!elt.has('.aloha-editable').length) {
-								elt.css('text-align', that.alignment);
+								var possible_values = ['right', 'left', 'center', 'justify'];
+								for (j=0; j<possible_values.length; j++) {
+									if (possible_values[i] === that.alignment) {
+										elt.addClass('aloha-align-'+that.alignment);
+									} else {
+										elt.removeClass('aloha-align-'+possible_values[i]);
+									}
+								}
 								break;
 							}
 						}

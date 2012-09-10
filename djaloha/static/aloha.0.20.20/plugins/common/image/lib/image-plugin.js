@@ -111,7 +111,7 @@ define([
 					insert		: false,
 					reset		: false,
 					aspectRatioToggle: true, // Toggle button for the aspect ratio 
-					align		: false, // Menu elements to show/hide in menu
+					align		: true, // Menu elements to show/hide in menu
 					resize		: true, // Resize buttons
 					meta		: true,
 					margin		: false,
@@ -1158,10 +1158,19 @@ define([
 			},
 			
 			setAlignment: function(alignment) {
-				var $wrapper = this.imageObj.closest('.Aloha_Image_Resize');
-				
-				$wrapper.css('float', alignment);
-				
+				var klass_values = ['left', 'right'];
+				var img = this.imageObj;
+				var root = img.parents('.aloha-editable').first();
+				//$(img).addClass('delete-me');
+				for (var j=0; j<klass_values.length; j++) {
+					var klass = 'aloha-align-'+klass_values[j];
+					if (klass_values[j] === alignment) {
+						img.addClass(klass);
+					} else {
+						img.removeClass(klass);
+					}
+				}
+				root.attr('contenteditable', 'true')
 			},
 
 			/**

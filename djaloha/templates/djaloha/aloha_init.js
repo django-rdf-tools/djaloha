@@ -98,17 +98,6 @@
 				]
 			},
             image: {
-				config:{
-					'fixedAspectRatio' : false,
-					'maxWidth'         : 600,
-					'minWidth'         : 20,
-					'maxHeight'        : 600,
-					'minHeight'        : 20,
-					'globalselector'   : '.global',
-					'ui': {
-						'oneTab': true
-					}
-				},
 				'fixedAspectRatio' : false,
 				'maxWidth'         : 600,
 				'minWidth'         : 20,
@@ -116,9 +105,7 @@
 				'minHeight'        : 20,
 				'globalselector'   : '.global',
 				'ui': {
-					'oneTab' : true,
-					'align'  : false,
-					'margin' : false
+					'oneTab' : false,
 				}
 			},
 			cite: {

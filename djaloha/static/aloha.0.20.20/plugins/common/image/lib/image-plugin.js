@@ -108,14 +108,15 @@ define([
 				//Image manipulation options - ONLY in default config section
 				ui: {
 					oneTab		: false, //Place all ui components within one tab
-					insert		: true,
-					reset		: true,
+					insert		: false,
+					reset		: false,
 					aspectRatioToggle: true, // Toggle button for the aspect ratio 
-					align		: true, // Menu elements to show/hide in menu
+					align		: false, // Menu elements to show/hide in menu
 					resize		: true, // Resize buttons
 					meta		: true,
-					margin		: true,
-					crop		: true,
+					margin		: false,
+					crop		: false,
+					del         : true,
 					resizable	: true, // Resizable ui-drag image
 					handles		: 'ne, se, sw, nw'
 				},
@@ -300,6 +301,11 @@ define([
 					tabId = this.settings.ui.reset ? tabImage : tabImage;
 					that._addUIResetButton(tabId);
 				}
+				
+				if (this.settings.ui.del) {
+					tabId = tabImage;
+					that._addUIDeleteButton(tabId);
+				}
 
 				if (this.settings.ui.align) {
 					tabId = this.settings.ui.oneTab ? tabImage : tabFormatting;
@@ -384,6 +390,38 @@ define([
 					2
 				);
 			},
+			
+			/**
+			 * Adds the reset button to the floating menu for the given tab 
+			 */
+			_addUIDeleteButton: function(tabId) {
+				var that = this,
+					delButton = new Aloha.ui.Button({
+						// Reset button
+						'size' : 'small',
+						'tooltip' : i18n.t('Delete'),
+						'toggle' : false,
+						'iconClass' : 'aloha-img aloha-image-delete',
+						'onclick' : function (btn, event) {
+							if (confirm(i18n.t('confirm.delete'))) {
+								var img = that.imageObj;
+								var root = img.parents('.aloha-editable').first();
+								//$(img).addClass('delete-me');
+								FloatingMenu.setScope( 'Aloha.continuoustext' );
+								img.remove();
+								root.attr('contenteditable', 'true')
+							}
+						}
+					});
+
+				FloatingMenu.addButton(
+					that.name,
+					delButton,
+					tabId,
+					2
+				);
+			},
+
 
 			/**
 			 * Adds the insert button to the floating menu
@@ -400,23 +438,23 @@ define([
 					'toggle' : false
 				});
 
-				FloatingMenu.addButton(
-					'Aloha.continuoustext',
-					this.insertImgButton,
-					tabId,
-					1
-				);
+				if (this.insertImgButton) {
+					FloatingMenu.addButton(
+						'Aloha.continuoustext',
+						this.insertImgButton,
+						tabId,
+						1
+					);	
+				}
 			},
 
 			/**
 			 * Adds the ui meta fields (search, title) to the floating menu. 
 			 */
 			_addUIMetaButtons: function(tabId) {
-				var that = this,
-					imgTitleLabel,
-					imgSrcLabel;
+				var that = this;
 
-				imgSrcLabel = new Aloha.ui.Button({
+				/*imgSrcLabel = new Aloha.ui.Button({
 					'label': i18n.t('field.img.src.label'),
 					'tooltip': i18n.t('field.img.src.tooltip'),
 					'size': 'small'
@@ -424,19 +462,22 @@ define([
 
 				this.imgSrcField = new Aloha.ui.AttributeField({'name' : 'imgsrc'});
 				this.imgSrcField.setObjectTypeFilter(this.objectTypeFilter);
+				*/
+				
+				this.imgSrcField = null;
 
 				// add the title field for images
-				imgTitleLabel = new Aloha.ui.Button({
+				var imgTitleLabel = new Aloha.ui.Button({
 					'label': i18n.t('field.img.title.label'),
 					'tooltip': i18n.t('field.img.title.tooltip'),
 					'size': 'small'
 				});
-
-				this.imgTitleField = new Aloha.ui.AttributeField();
-				this.imgTitleField.setObjectTypeFilter();
+				
+				this.imgTitleField = new Aloha.ui.AttributeField({'name': 'imgtitle'});
+				//this.imgTitleField.setObjectTypeFilter();
 				FloatingMenu.addButton(
 					this.name,
-					this.imgSrcField,
+					this.imgTitleField,
 					tabId,
 					1
 				);
@@ -455,8 +496,9 @@ define([
 					'iconClass': 'aloha-img aloha-image-align-left',
 					'size': 'small',
 					'onclick' : function () {
-						var el = jQuery(that.findImgMarkup());
-						el.add(el.parent()).css('float', 'left');
+						/*var el = jQuery(that.findImgMarkup());
+						el.add(el.parent()).css('float', 'left');*/
+						that.setAlignment('left');
 					},
 					'tooltip': i18n.t('button.img.align.left.tooltip')
 				});
@@ -472,8 +514,7 @@ define([
 					'iconClass': 'aloha-img aloha-image-align-right',
 					'size': 'small',
 					'onclick' : function() {
-						var el = jQuery(that.findImgMarkup());
-						el.add(el.parent()).css('float', 'right');
+						that.setAlignment('right');
 					},
 					'tooltip': i18n.t('button.img.align.right.tooltip')
 				});
@@ -489,11 +530,7 @@ define([
 					'iconClass': 'aloha-img aloha-image-align-none',
 					'size': 'small',
 					'onclick' : function() {
-						var el = jQuery(that.findImgMarkup());
-						el.add(el.parent()).css({
-							'float': 'none',
-							display: 'inline-block'
-						});
+						that.setAlignment('none');
 					},
 					'tooltip': i18n.t('button.img.align.none.tooltip')
 				});
@@ -700,18 +737,26 @@ define([
 
 				if (this.settings.ui.meta) {
 					// update image object when src changes
-					this.imgSrcField.addListener('keyup', function(obj, event) {
-						that.srcChange();
-					});
-
-					this.imgSrcField.addListener('blur', function(obj, event) {
-						// TODO remove image or do something usefull if the user leaves the
-						// image without defining a valid image src.
-						var img = jQuery(obj.getTargetObject());
-						if ( img.attr('src') === '' ) {
-							img.remove();
-						} // image removal when src field is blank
-					});
+					if (this.imgSrcField) {
+						this.imgSrcField.addListener('keyup', function(obj, event) {
+							that.srcChange();
+						});	
+					
+						this.imgSrcField.addListener('blur', function(obj, event) {
+							// TODO remove image or do something usefull if the user leaves the
+							// image without defining a valid image src.
+							var img = jQuery(obj.getTargetObject());
+							if ( img.attr('src') === '' ) {
+								img.remove();
+							} // image removal when src field is blank
+						});
+					}
+					
+					if (this.imgTitleField) {
+						this.imgTitleField.addListener('keyup', function(obj, event) {
+							that.titleChange();
+						});	
+					}
 				}
 
 				// Override the default method by using the given one
@@ -795,25 +840,32 @@ define([
 						config = that.getEditableConfig(Aloha.activeEditable.obj);
 						//that.settings = this.settings = jQuery.extend(true, that.defaultSettings, config);
 
-						if ( jQuery.isEmpty(config) ) {
-							that.insertImgButton.hide();
-							return;
-						} else {
-							that.insertImgButton.show();
+						if (this.insertImgButton) {
+							if ( jQuery.isEmpty(config) ) {
+								that.insertImgButton.hide();
+								return;
+							} else {
+								that.insertImgButton.show();
+							}
 						}
 
 						// Enable image specific ui components if the element is an image
 						if (foundMarkup) {
-							that.insertImgButton.hide();
+							if (this.insertImgButton) {that.insertImgButton.hide();}
 							FloatingMenu.setScope(that.name);
-							if ( that.settings.ui.meta ) {
-								that.imgSrcField.setTargetObject(foundMarkup, 'src');
-								that.imgTitleField.setTargetObject(foundMarkup, 'title');
-							}
-							that.imgSrcField.focus();
-							FloatingMenu.activateTabOfButton('imgsrc');
-						} else {
 							if ( that.settings.ui.meta) {
+								if (that.imgSrcField) {
+									that.imgSrcField.setTargetObject(foundMarkup, 'src');
+									that.imgSrcField.focus();
+									FloatingMenu.activateTabOfButton('imgsrc');
+								} else if (that.imgTitleField) {
+									that.imgTitleField.setTargetObject(foundMarkup, 'title');
+									that.imgTitleField.focus();
+									FloatingMenu.activateTabOfButton('imgtitle');
+								}
+							}
+						} else {
+							if ( that.settings.ui.meta && that.imgSrcField) {
 								that.imgSrcField.setTargetObject(null);
 							}
 						}
@@ -1104,6 +1156,13 @@ define([
 				this._onResize(this.imageObj);
 				this._onResized(this.imageObj);
 			},
+			
+			setAlignment: function(alignment) {
+				var $wrapper = this.imageObj.closest('.Aloha_Image_Resize');
+				
+				$wrapper.css('float', alignment);
+				
+			},
 
 			/**
 			 * This method will handle the mouseUp event on images (eg. within editables). 
@@ -1360,11 +1419,20 @@ define([
 				// 2. start a request to get the image
 				// 3a. the image is ok change the src
 				// 3b. the image is not availbable show an error.
-				 this.imageObj.attr('src', this.imgSrcField.getQueryValue() ); // (the img tag)
+				 if (this.imgSrcField) {
+					this.imageObj.attr('src', this.imgSrcField.getQueryValue() ); // (the img tag)
+				 }
 	//			 jQuery(img).attr('src', this.imgSrcField.getQueryValue() ); // (the query value in the inputfield)
 	//			 this.imgSrcField.getItem(); // (optinal a selected resource item)
 				// TODO additionally implement an srcChange Handler to let implementer
 				// customize
+			},
+			
+			titleChange: function() {
+				if (this.imgTitleField) {
+					this.imageObj.attr('alt', this.imgTitleField.getQueryValue() );
+					this.imageObj.attr('title', this.imgTitleField.getQueryValue() );
+				 }
 			},
 
 			/**

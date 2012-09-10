@@ -122,3 +122,7 @@ button.cnr-reset {
 }
 .aloha-image-box-active .ui-resizable-handle.ui-resizable-sw {
 }
+
+button.aloha-img.aloha-image-delete {
+    background: url(../img/delete.png);
+}

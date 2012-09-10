@@ -301,7 +301,17 @@ function(Aloha, Plugin, FloatingMenu, i18n, i18nCore, jQuery) {
 				if(this.selection !== 'none' && this.domobj.nodeType !== 3) {
 					jQuery(this.domobj).css('text-align', that.alignment);
 				} else if (this.selection !== 'none' && this.domobj.nodeType === 3) {
-					jQuery(this.domobj).parents('p').first().css('text-align', that.alignment);
+					var wrapper_tags = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'pre'];
+					for (i=0; i<wrapper_tags.length; i++) {
+						var tag = wrapper_tags[i];
+						var elt = jQuery(this.domobj).parents(tag).first();
+						if (elt.length) {
+							if (!elt.has('.aloha-editable').length) {
+								elt.css('text-align', that.alignment);
+								break;
+							}
+						}
+					}
 				}
 			});
 

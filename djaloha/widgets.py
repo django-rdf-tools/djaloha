@@ -29,7 +29,13 @@ class AlohaInput(TextInput):
         """
 
         try:
-            custom_jquery = getattr(settings, 'DJALOHA_JQUERY', "js/jquery-1.7.2.js")
+            skip_jquery = getattr(settings, 'SKIP_DJALOHA_JQUERY', False)
+            if skip_jquery:
+                if settings.DEBUG:
+                    custom_jquery = getattr(settings, 'DJALOHA_JQUERY', "js/jquery-1.7.2.js")
+                else:
+                    custom_jquery = getattr(settings, 'DJALOHA_JQUERY', "js/jquery-1.7.2.min.js")
+
             aloha_init_url = self.aloha_init_url or getattr(settings, 'DJALOHA_INIT_URL', None) or reverse('aloha_init')
             aloha_version = getattr(settings, 'DJALOHA_ALOHA_VERSION', "aloha.0.20.20")
 

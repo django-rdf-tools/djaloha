@@ -29,13 +29,6 @@ class AlohaInput(TextInput):
         """
 
         try:
-            skip_jquery = getattr(settings, 'SKIP_DJALOHA_JQUERY', False)
-            if skip_jquery:
-                if settings.DEBUG:
-                    custom_jquery = getattr(settings, 'DJALOHA_JQUERY', "js/jquery-1.7.2.js")
-                else:
-                    custom_jquery = getattr(settings, 'DJALOHA_JQUERY', "js/jquery-1.7.2.min.js")
-
             aloha_init_url = self.aloha_init_url or getattr(settings, 'DJALOHA_INIT_URL', None) or reverse('aloha_init')
             aloha_version = getattr(settings, 'DJALOHA_ALOHA_VERSION', "aloha.0.20.20")
 
@@ -69,12 +62,17 @@ class AlohaInput(TextInput):
                 )
             }
 
-            js = (
-                custom_jquery,
-                # Yes I know this is very dirty but the better (less bad) solution so-far
-                u'{0}/lib/aloha.js" data-aloha-plugins="{1}'.format(aloha_version, u",".join(aloha_plugins)),
-                aloha_init_url,
-            )
+            js = []
+
+            skip_jquery = getattr(settings, 'SKIP_DJALOHA_JQUERY', False)
+            if not skip_jquery:
+                if settings.DEBUG:
+                    js.append(getattr(settings, 'DJALOHA_JQUERY', "js/jquery-1.7.2.js"))
+                else:
+                    js.append(getattr(settings, 'DJALOHA_JQUERY', "js/jquery-1.7.2.min.js"))
+
+            js.append(u'{0}/lib/aloha.js" data-aloha-plugins="{1}'.format(aloha_version, u",".join(aloha_plugins)))
+            js.append(aloha_init_url)
 
             return Media(css=css, js=js)
         except Exception, msg:

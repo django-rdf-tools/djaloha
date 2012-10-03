@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
 from floppyforms.widgets import TextInput
-from django.utils.encoding import force_unicode
 from django.forms import Media
 from django.core.urlresolvers import reverse
 from django.conf import settings
+
 
 class AlohaInput(TextInput):
     """
@@ -12,7 +12,7 @@ class AlohaInput(TextInput):
     requires floppyforms to be installed
     """
 
-    template_name='djaloha/alohainput.html'
+    template_name = 'djaloha/alohainput.html'
 
     def __init__(self, *args, **kwargs):
         kwargs.pop('text_color_plugin', None) # for compatibility with previous versions

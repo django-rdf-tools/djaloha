@@ -104,5 +104,3 @@ LOGGING = {
         },
     }
 }
-
-DJALOHA_ALOHA_VERSION = 'aloha.0.20.20'

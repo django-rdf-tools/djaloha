@@ -1,5 +1,6 @@
 Djaloha
 ===============================================
+.. image:: https://secure.travis-ci.org/dmpinheiro/djaloha.png?branch=master
 
 * `What is djaloha good for?`_
 * `Quick start`_
